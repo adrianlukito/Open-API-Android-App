@@ -6,7 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.codingwithmitch.openapi.R
+import com.codingwithmitch.openapi.util.ApiEmptyResponse
+import com.codingwithmitch.openapi.util.ApiErrorResponse
+import com.codingwithmitch.openapi.util.ApiSuccessResponse
 
 class RegisterFragment : BaseAuthFragment() {
 
@@ -22,5 +26,19 @@ class RegisterFragment : BaseAuthFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         Log.d(TAG, "RegisterFragment: ${viewModel.hashCode()}")
+
+        viewModel.testRegister().observe(viewLifecycleOwner, Observer { response ->
+            when(response) {
+                is ApiSuccessResponse -> {
+                    Log.d(TAG, "REGISTER SUCCESS: ${response.body}")
+                }
+                is ApiErrorResponse -> {
+                    Log.d(TAG, "REGISTER ERROR: ${response.errorMessage}")
+                }
+                is ApiEmptyResponse -> {
+                    Log.d(TAG, "REGISTER EMPTY: Empty response")
+                }
+            }
+        })
     }
 }
