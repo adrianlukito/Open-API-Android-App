@@ -4,8 +4,9 @@ import com.codingwithmitch.openapi.api.auth.OpenApiAuthService
 import com.codingwithmitch.openapi.persistence.AccountPropertiesDao
 import com.codingwithmitch.openapi.persistence.AuthTokenDao
 import com.codingwithmitch.openapi.session.SessionManager
+import javax.inject.Inject
 
-class AuthRepository constructor(
+class AuthRepository @Inject constructor(
     val authTokenDao: AuthTokenDao,
     val accountPropertiesDao: AccountPropertiesDao,
     val openApiAuthService: OpenApiAuthService,
