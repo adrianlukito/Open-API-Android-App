@@ -10,14 +10,14 @@ data class DataState<T>(
             return DataState(error = Event(StateError(response)))
         }
 
-        fun <T> loading(isLoading: Boolean, cachedData: T?): DataState<T> {
+        fun <T> loading(isLoading: Boolean, cachedData: T? = null): DataState<T> {
             return DataState(
                 loading = Loading(isLoading),
                 data = Data(Event.dataEvent(cachedData), null)
             )
         }
 
-        fun <T> success(data: T?, response: Response?): DataState<T> {
+        fun <T> success(data: T? = null, response: Response? = null): DataState<T> {
             return DataState(data = Data(Event.dataEvent(data), Event.responseEvent(response)))
         }
     }

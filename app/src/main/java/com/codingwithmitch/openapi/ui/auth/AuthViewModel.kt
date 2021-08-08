@@ -69,4 +69,13 @@ class AuthViewModel @Inject constructor(
             }
         }
     }
+
+    fun cancelActiveJobs() {
+        authRepository.cancelActiveJobs()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        cancelActiveJobs()
+    }
 }
