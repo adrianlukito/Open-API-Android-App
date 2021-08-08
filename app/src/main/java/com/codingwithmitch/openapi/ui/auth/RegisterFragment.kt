@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.codingwithmitch.openapi.R
+import com.codingwithmitch.openapi.ui.auth.state.AuthStateEvent.RegisterAttemptEvent
 import com.codingwithmitch.openapi.ui.auth.state.RegistrationFields
 import kotlinx.android.synthetic.main.fragment_register.*
 
@@ -24,6 +25,10 @@ class RegisterFragment : BaseAuthFragment() {
 
         Log.d(TAG, "RegisterFragment: ${viewModel.hashCode()}")
 
+        register_button.setOnClickListener {
+            register()
+        }
+
         subscribeObservers()
     }
 
@@ -36,6 +41,17 @@ class RegisterFragment : BaseAuthFragment() {
                 registrationFields.registration_confirm_password?.let { confirmPassword -> input_password_confirm.setText(confirmPassword) }
             }
         })
+    }
+
+    fun register() {
+        viewModel.setStateEvent(
+            RegisterAttemptEvent(
+                input_email.text.toString(),
+                input_username.text.toString(),
+                input_password.text.toString(),
+                input_password_confirm.text.toString()
+            )
+        )
     }
 
     override fun onDestroyView() {

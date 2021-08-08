@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.codingwithmitch.openapi.R
+import com.codingwithmitch.openapi.ui.auth.state.AuthStateEvent.LoginAttemptEvent
 import com.codingwithmitch.openapi.ui.auth.state.LoginFields
 import kotlinx.android.synthetic.main.fragment_login.*
 
@@ -24,6 +25,10 @@ class LoginFragment : BaseAuthFragment() {
 
         Log.d(TAG, "LoginFragment: ${viewModel.hashCode()}")
 
+        login_button.setOnClickListener {
+            login()
+        }
+
         subscribeObservers()
     }
 
@@ -34,6 +39,15 @@ class LoginFragment : BaseAuthFragment() {
                 loginFields.login_password?.let { password -> input_password.setText(password) }
             }
         })
+    }
+
+    fun login() {
+        viewModel.setStateEvent(
+            LoginAttemptEvent(
+                input_email.text.toString(),
+                input_password.text.toString()
+            )
+        )
     }
 
     override fun onDestroyView() {
