@@ -10,6 +10,7 @@
       <map>
         <entry key="app/src/main/res/drawable/main_button_drawable.xml" value="0.1671875" />
         <entry key="app/src/main/res/layout/activity_auth.xml" value="0.15104166666666666" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.13385416666666666" />
         <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.15104166666666666" />
         <entry key="app/src/main/res/layout/fragment_launcher.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.15104166666666666" />
