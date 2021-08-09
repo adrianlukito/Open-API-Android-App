@@ -7,9 +7,9 @@ import com.codingwithmitch.openapi.ui.DataState
 import com.codingwithmitch.openapi.ui.Response
 import com.codingwithmitch.openapi.ui.ResponseType
 import com.codingwithmitch.openapi.util.*
-import com.codingwithmitch.openapi.util.Constants.Companion.NETWORK_TIMEOUT
-import com.codingwithmitch.openapi.util.Constants.Companion.TESTING_CACHE_DELAY
-import com.codingwithmitch.openapi.util.Constants.Companion.TESTING_NETWORK_DELAY
+import com.codingwithmitch.openapi.util.Constants.NETWORK_TIMEOUT
+import com.codingwithmitch.openapi.util.Constants.TESTING_CACHE_DELAY
+import com.codingwithmitch.openapi.util.Constants.TESTING_NETWORK_DELAY
 import com.codingwithmitch.openapi.util.ErrorHandling.Companion.ERROR_CHECK_NETWORK_CONNECTION
 import com.codingwithmitch.openapi.util.ErrorHandling.Companion.ERROR_UNKNOWN
 import com.codingwithmitch.openapi.util.ErrorHandling.Companion.UNABLE_TODO_OPERATION_WO_INTERNET
