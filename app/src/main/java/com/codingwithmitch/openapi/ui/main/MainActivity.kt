@@ -17,6 +17,7 @@ import com.codingwithmitch.openapi.ui.main.blog.ViewBlogFragment
 import com.codingwithmitch.openapi.util.BottomNavController
 import com.codingwithmitch.openapi.util.BottomNavController.*
 import com.codingwithmitch.openapi.util.setUpNavigation
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -49,10 +50,6 @@ class MainActivity: BaseActivity(),
         }
 
         subscribeObservers()
-
-        tool_bar.setOnClickListener {
-            sessionManager.logout()
-        }
     }
 
     private fun setupActionBar() {
@@ -73,6 +70,7 @@ class MainActivity: BaseActivity(),
             Log.d(TAG, "MainActivity: subscribeObservers: AuthToken: $authToken")
             if(authToken == null || authToken.account_pk == -1 || authToken.token == null) {
                 navAuthActivity()
+                finish()
             }
         })
     }
@@ -95,7 +93,7 @@ class MainActivity: BaseActivity(),
     }
 
     override fun onGraphChange() {
-
+        expandAppbar()
     }
 
     override fun onReselectNavItem(navController: NavController, fragment: Fragment) = when(fragment) {
@@ -106,5 +104,9 @@ class MainActivity: BaseActivity(),
         else -> {
             // do nothing
         }
+    }
+
+    private fun expandAppbar() {
+        findViewById<AppBarLayout>(R.id.app_bar).setExpanded(true)
     }
 }

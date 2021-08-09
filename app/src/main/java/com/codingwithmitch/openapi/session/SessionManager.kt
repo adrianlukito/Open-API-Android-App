@@ -39,9 +39,10 @@ class SessionManager @Inject constructor(
             var errorMessage: String? = null
             
             try {
-                cachedToken.value!!.account_pk?.let {
+                _cachedToken.value!!.account_pk?.let {
+                    Log.d(TAG, "nullify: ")
                     authTokenDao.nullifyToken(it)
-                }
+                } ?: throw CancellationException("Token Error. Logging out user.")
             } catch (e: CancellationException) {
                 Log.e(TAG, "logout: ${e.message}")
                 errorMessage = e.message
@@ -59,6 +60,7 @@ class SessionManager @Inject constructor(
     }
 
     private fun setValue(newValue: AuthToken?) {
+        Log.d(TAG, "login: TRLALALA $newValue")
         GlobalScope.launch(Main) {
             Log.d(TAG, "setValue: ${_cachedToken.value} -- ${newValue}")
             if(_cachedToken.value != newValue) {

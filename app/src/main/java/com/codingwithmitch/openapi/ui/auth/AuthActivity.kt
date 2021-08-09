@@ -12,6 +12,7 @@ import com.codingwithmitch.openapi.R
 import com.codingwithmitch.openapi.ui.BaseActivity
 import com.codingwithmitch.openapi.ui.auth.state.AuthStateEvent
 import com.codingwithmitch.openapi.ui.main.MainActivity
+import com.codingwithmitch.openapi.util.SuccessHandling.Companion.RESPONSE_CHECK_PREVIOUS_AUTH_USER_DONE
 import com.codingwithmitch.openapi.viewmodels.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.activity_auth.*
 import javax.inject.Inject
@@ -45,6 +46,15 @@ class AuthActivity : BaseActivity(), NavController.OnDestinationChangedListener{
                         }
                     }
                 }
+                data.response?.let{event ->
+                    event.peekContent().let{ response ->
+                        response.message?.let{ message ->
+                            if(message.equals(RESPONSE_CHECK_PREVIOUS_AUTH_USER_DONE)){
+                                onFinishCheckPreviousAuthUser()
+                            }
+                        }
+                    }
+                }
             }
         })
 
@@ -65,6 +75,10 @@ class AuthActivity : BaseActivity(), NavController.OnDestinationChangedListener{
 
     fun checkPreviousAuthUser() {
         viewModel.setStateEvent(AuthStateEvent.CheckPreviousAuthEvent())
+    }
+
+    private fun onFinishCheckPreviousAuthUser(){
+        fragment_container.isVisible = true
     }
 
     private fun navMainActivity() {
