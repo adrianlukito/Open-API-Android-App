@@ -11,10 +11,18 @@
         <entry key="app/src/main/res/drawable/main_button_drawable.xml" value="0.1671875" />
         <entry key="app/src/main/res/layout/activity_auth.xml" value="0.15104166666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.13385416666666666" />
+        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_blog.xml" value="0.1816123188405797" />
+        <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.1816123188405797" />
+        <entry key="app/src/main/res/layout/fragment_create_blog.xml" value="0.1816123188405797" />
         <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.15104166666666666" />
         <entry key="app/src/main/res/layout/fragment_launcher.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.15104166666666666" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.15104166666666666" />
+        <entry key="app/src/main/res/layout/fragment_update_account.xml" value="0.1816123188405797" />
+        <entry key="app/src/main/res/layout/fragment_update_blog.xml" value="0.1816123188405797" />
+        <entry key="app/src/main/res/layout/fragment_view_blog.xml" value="0.165" />
+        <entry key="app/src/main/res/menu/main_bottom_navigation_menu.xml" value="0.18854166666666666" />
       </map>
     </option>
   </component>
