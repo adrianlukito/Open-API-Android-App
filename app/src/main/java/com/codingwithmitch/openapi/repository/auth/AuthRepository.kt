@@ -10,6 +10,7 @@ import com.codingwithmitch.openapi.models.AccountProperties
 import com.codingwithmitch.openapi.models.AuthToken
 import com.codingwithmitch.openapi.persistence.AccountPropertiesDao
 import com.codingwithmitch.openapi.persistence.AuthTokenDao
+import com.codingwithmitch.openapi.repository.JobManager
 import com.codingwithmitch.openapi.repository.NetworkBoundResource
 import com.codingwithmitch.openapi.session.SessionManager
 import com.codingwithmitch.openapi.ui.DataState
@@ -35,10 +36,8 @@ class AuthRepository @Inject constructor(
     val sessionManager: SessionManager,
     val sharedPreferences: SharedPreferences,
     val sharedPrefsEditor: SharedPreferences.Editor
-) {
+): JobManager("AuthRepository") {
     private val TAG = "AppDebug"
-
-    private var repositoryJob: Job? = null
 
     fun attemptLogin(email: String, password: String): LiveData<DataState<AuthViewState>> {
         val loginFieldErrors = LoginFields(email, password).isValidForLogin()
@@ -102,8 +101,7 @@ class AuthRepository @Inject constructor(
             }
 
             override fun setJob(job: Job) {
-                repositoryJob?.cancel()
-                repositoryJob = job
+                addJob("attemptLogin", job)
             }
 
             // not used in this case
@@ -190,8 +188,7 @@ class AuthRepository @Inject constructor(
             }
 
             override fun setJob(job: Job) {
-                repositoryJob?.cancel()
-                repositoryJob = job
+                addJob("attemptRegistration", job)
             }
 
             // not used in this case
@@ -267,8 +264,7 @@ class AuthRepository @Inject constructor(
             }
 
             override fun setJob(job: Job) {
-                repositoryJob?.cancel()
-                repositoryJob = job
+                addJob("checkPreviousAuthUser", job)
             }
 
             override fun loadFromCache(): LiveData<AuthViewState> {
@@ -309,11 +305,6 @@ class AuthRepository @Inject constructor(
                 )
             }
         }
-    }
-
-    fun cancelActiveJobs() {
-        Log.d(TAG, "cancelActiveJobs: Cancelling on-going jobs...")
-        repositoryJob?.cancel()
     }
 
 }

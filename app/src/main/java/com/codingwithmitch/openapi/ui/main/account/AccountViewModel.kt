@@ -49,7 +49,12 @@ class AccountViewModel @Inject constructor(
                 } ?: AbsentLiveData.create()
             }
             is None -> {
-                return AbsentLiveData.create()
+                return object: LiveData<DataState<AccountViewState>>() {
+                    override fun onActive() {
+                        super.onActive()
+                        value = DataState.success(null, null)
+                    }
+                }
             }
         }
     }
@@ -65,5 +70,19 @@ class AccountViewModel @Inject constructor(
 
     fun logout() {
         sessionManager.logout()
+    }
+
+    fun cancelActiveJobs() {
+        accountRepository.cancelActiveJobs()
+        handlePendingData()
+    }
+
+    fun handlePendingData() {
+        setStateEvent(None())
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        cancelActiveJobs()
     }
 }

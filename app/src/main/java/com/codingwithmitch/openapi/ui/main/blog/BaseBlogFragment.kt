@@ -21,6 +21,8 @@ abstract class BaseBlogFragment : DaggerFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupActionBarWithNavController(R.id.blogFragment, activity as AppCompatActivity)
+
+        cancelActiveJobs()
     }
 
     fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity) {
@@ -39,5 +41,9 @@ abstract class BaseBlogFragment : DaggerFragment(){
         }catch(e: ClassCastException){
             Log.e(TAG, "$context must implement DataStateChangeListener" )
         }
+    }
+
+    fun cancelActiveJobs() {
+//        viewModel.cancelActiveJobs()
     }
 }

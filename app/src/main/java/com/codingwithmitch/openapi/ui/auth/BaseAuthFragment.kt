@@ -5,7 +5,6 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.codingwithmitch.openapi.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
-import java.lang.Exception
 import javax.inject.Inject
 
 abstract class BaseAuthFragment: DaggerFragment() {
@@ -23,5 +22,11 @@ abstract class BaseAuthFragment: DaggerFragment() {
         viewModel = activity?.run {
             ViewModelProvider(this, providerFactory).get(AuthViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
+
+        cancelActiveJobs()
+    }
+
+    fun cancelActiveJobs() {
+        viewModel.cancelActiveJobs()
     }
 }
