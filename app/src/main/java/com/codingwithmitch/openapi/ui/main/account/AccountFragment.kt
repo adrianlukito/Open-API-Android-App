@@ -4,14 +4,9 @@ import android.os.Bundle
 import android.view.*
 import androidx.navigation.fragment.findNavController
 import com.codingwithmitch.openapi.R
-import com.codingwithmitch.openapi.session.SessionManager
 import kotlinx.android.synthetic.main.fragment_account.*
-import javax.inject.Inject
 
 class AccountFragment : BaseAccountFragment(){
-
-    @Inject
-    lateinit var sessionManager: SessionManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +25,7 @@ class AccountFragment : BaseAccountFragment(){
         }
 
         logout_button.setOnClickListener {
-            sessionManager.logout()
+            viewModel.logout()
         }
     }
 
