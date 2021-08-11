@@ -1,9 +1,12 @@
 package com.codingwithmitch.openapi.ui.main.account
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.navigation.fragment.findNavController
 import com.codingwithmitch.openapi.R
+import com.codingwithmitch.openapi.models.AccountProperties
+import com.codingwithmitch.openapi.ui.main.account.state.AccountStateEvent
 import kotlinx.android.synthetic.main.fragment_account.*
 
 class AccountFragment : BaseAccountFragment(){
@@ -27,6 +30,44 @@ class AccountFragment : BaseAccountFragment(){
         logout_button.setOnClickListener {
             viewModel.logout()
         }
+        subscribeObservers()
+    }
+
+    private fun subscribeObservers() {
+        viewModel.dataState.observe(viewLifecycleOwner, { dataState ->
+            stateChangeListener.onDataStateChange(dataState)
+            dataState?.let {
+                it.data?.let { data ->
+                    data.data?.let { event ->
+                        event.getContentIfNotHandled()?.let { viewState ->
+                            viewState.accountProperties?.let { accountProperties ->
+                                Log.d(TAG, "AccountFragment, DataState: $accountProperties")
+                                viewModel.setAccountPropertiesData(accountProperties)
+                            }
+                        }
+                    }
+                }
+            }
+        })
+
+        viewModel.viewState.observe(viewLifecycleOwner, { viewState ->
+            viewState?.let { 
+                it.accountProperties?.let { accountProperties ->
+                    Log.d(TAG, "AccountFragment, ViewState: $accountProperties")
+                    setAccountDataFields(accountProperties)
+                }
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.setStateEvent(AccountStateEvent.GetAccountPropertiesEvent())
+    }
+
+    private fun setAccountDataFields(accountProperties: AccountProperties) {
+        email.text = accountProperties.email
+        username.text = accountProperties.username
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

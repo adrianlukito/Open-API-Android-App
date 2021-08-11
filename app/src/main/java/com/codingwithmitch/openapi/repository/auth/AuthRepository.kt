@@ -46,9 +46,10 @@ class AuthRepository @Inject constructor(
             return returnErrorResponse(loginFieldErrors, ResponseType.Dialog())
         }
 
-        return object : NetworkBoundResource<LoginResponse, AuthViewState>(
+        return object : NetworkBoundResource<LoginResponse, Any, AuthViewState>(
             sessionManager.isConnectedToTheInternet(),
-            true
+            true,
+            false
         ) {
             override suspend fun handleApiSuccessResponse(response: ApiSuccessResponse<LoginResponse>) {
                 Log.d(TAG, "handleApiSuccessResponse: $response")
@@ -109,6 +110,15 @@ class AuthRepository @Inject constructor(
 
             }
 
+            override fun loadFromCache(): LiveData<AuthViewState> {
+                return AbsentLiveData.create()
+            }
+
+            // not used in this case
+            override suspend fun updateLocalDb(cacheObject: Any?) {
+
+            }
+
         }.asLiveData()
     }
 
@@ -123,9 +133,10 @@ class AuthRepository @Inject constructor(
             return returnErrorResponse(registrationFieldsError, ResponseType.Dialog())
         }
 
-        return object : NetworkBoundResource<RegistrationResponse, AuthViewState>(
+        return object : NetworkBoundResource<RegistrationResponse, Any,AuthViewState>(
             sessionManager.isConnectedToTheInternet(),
-            true
+            true,
+            false
         ) {
             override suspend fun handleApiSuccessResponse(response: ApiSuccessResponse<RegistrationResponse>) {
                 Log.d(TAG, "handleApiSuccessResponse: $response")
@@ -186,6 +197,15 @@ class AuthRepository @Inject constructor(
 
             }
 
+            override fun loadFromCache(): LiveData<AuthViewState> {
+                return AbsentLiveData.create()
+            }
+
+            // not used in this case
+            override suspend fun updateLocalDb(cacheObject: Any?) {
+
+            }
+
         }.asLiveData()
     }
 
@@ -196,8 +216,9 @@ class AuthRepository @Inject constructor(
             return returnNoTokenFound()
         }
 
-        return object : NetworkBoundResource<Void, AuthViewState>(
+        return object : NetworkBoundResource<Void, Any, AuthViewState>(
             sessionManager.isConnectedToTheInternet(),
+            false,
             false
         ) {
             override suspend fun createCacheRequestAndReturn() {
@@ -245,6 +266,15 @@ class AuthRepository @Inject constructor(
             override fun setJob(job: Job) {
                 repositoryJob?.cancel()
                 repositoryJob = job
+            }
+
+            override fun loadFromCache(): LiveData<AuthViewState> {
+                return AbsentLiveData.create()
+            }
+
+            // not used in this case
+            override suspend fun updateLocalDb(cacheObject: Any?) {
+
             }
 
         }.asLiveData()
