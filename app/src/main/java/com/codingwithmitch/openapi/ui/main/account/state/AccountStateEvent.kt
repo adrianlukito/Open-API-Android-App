@@ -12,7 +12,7 @@ sealed class AccountStateEvent {
     data class ChangePasswordEvent(
         val currentPassword: String,
         val newPassword: String,
-        val confirmPassword: String,
+        val confirmNewPassword: String,
     ): AccountStateEvent()
 
     class None: AccountStateEvent()
