@@ -29,7 +29,12 @@ class BlogViewModel @Inject constructor(
     override fun handleStateEvent(stateEvent: BlogStateEvent): LiveData<DataState<BlogViewState>> {
         when(stateEvent) {
             is BlogSearchEvent -> {
-                return AbsentLiveData.create()
+                return sessionManager.cachedToken.value?.let { authToken ->
+                    blogRepository.searchBlogPosts(
+                        authToken,
+                        viewState.value!!.blogFields.searchQuery
+                    )
+                } ?: AbsentLiveData.create()
             }
 
             is None -> {
@@ -40,9 +45,9 @@ class BlogViewModel @Inject constructor(
 
     fun setQuery(query: String) {
         val update = getCurrentViewStateOrNew()
-        if(query.equals(update.blogFields.searchQuery)) {
-            return
-        }
+//        if(query.equals(update.blogFields.searchQuery)) {
+//            return
+//        }
         update.blogFields.searchQuery = query
         _viewState.value = update
     }
