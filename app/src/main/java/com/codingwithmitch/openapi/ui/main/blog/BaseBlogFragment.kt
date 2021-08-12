@@ -5,22 +5,34 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.codingwithmitch.openapi.R
 import com.codingwithmitch.openapi.ui.DataStateChangeListener
+import com.codingwithmitch.openapi.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
 abstract class BaseBlogFragment : DaggerFragment(){
 
     val TAG: String = "AppDebug"
+
+    @Inject
+    lateinit var providerFactory: ViewModelProviderFactory
+
+    lateinit var viewModel: BlogViewModel
 
     lateinit var stateChangeListener: DataStateChangeListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupActionBarWithNavController(R.id.blogFragment, activity as AppCompatActivity)
+
+        viewModel = activity?.run {
+            ViewModelProvider(this, providerFactory).get(BlogViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
 
         cancelActiveJobs()
     }
@@ -44,6 +56,6 @@ abstract class BaseBlogFragment : DaggerFragment(){
     }
 
     fun cancelActiveJobs() {
-//        viewModel.cancelActiveJobs()
+        viewModel.cancelActiveJobs()
     }
 }
