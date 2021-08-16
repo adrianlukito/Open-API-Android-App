@@ -5,6 +5,7 @@ import com.codingwithmitch.openapi.models.AuthToken
 import com.codingwithmitch.openapi.repository.auth.AuthRepository
 import com.codingwithmitch.openapi.ui.BaseViewModel
 import com.codingwithmitch.openapi.ui.DataState
+import com.codingwithmitch.openapi.ui.Loading
 import com.codingwithmitch.openapi.ui.auth.state.AuthStateEvent
 import com.codingwithmitch.openapi.ui.auth.state.AuthStateEvent.*
 import com.codingwithmitch.openapi.ui.auth.state.AuthViewState
@@ -67,10 +68,14 @@ class AuthViewModel @Inject constructor(
                 return authRepository.checkPreviousAuthUser()
             }
             is None -> {
-                return object: LiveData<DataState<AuthViewState>>() {
+                return object : LiveData<DataState<AuthViewState>> () {
                     override fun onActive() {
                         super.onActive()
-                        value = DataState.success(null, null)
+                        value = DataState(
+                            null,
+                            Loading(false),
+                            null
+                        )
                     }
                 }
             }

@@ -6,6 +6,7 @@ import com.codingwithmitch.openapi.repository.main.AccountRepository
 import com.codingwithmitch.openapi.session.SessionManager
 import com.codingwithmitch.openapi.ui.BaseViewModel
 import com.codingwithmitch.openapi.ui.DataState
+import com.codingwithmitch.openapi.ui.Loading
 import com.codingwithmitch.openapi.ui.main.account.state.AccountStateEvent
 import com.codingwithmitch.openapi.ui.main.account.state.AccountStateEvent.*
 import com.codingwithmitch.openapi.ui.main.account.state.AccountViewState
@@ -49,10 +50,14 @@ class AccountViewModel @Inject constructor(
                 } ?: AbsentLiveData.create()
             }
             is None -> {
-                return object: LiveData<DataState<AccountViewState>>() {
+                return object : LiveData<DataState<AccountViewState>> () {
                     override fun onActive() {
                         super.onActive()
-                        value = DataState.success(null, null)
+                        value = DataState(
+                            null,
+                            Loading(false),
+                            null
+                        )
                     }
                 }
             }
