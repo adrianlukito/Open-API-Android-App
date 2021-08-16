@@ -37,6 +37,10 @@ class BlogViewModel @Inject constructor(
                 } ?: AbsentLiveData.create()
             }
 
+            is BlogStateEvent.CheckAuthorOfBlogPost -> {
+                return AbsentLiveData.create()
+            }
+
             is None -> {
                 return AbsentLiveData.create()
             }
@@ -55,6 +59,18 @@ class BlogViewModel @Inject constructor(
     fun setBlogListData(blogList: List<BlogPost>) {
         val update = getCurrentViewStateOrNew()
         update.blogFields.blogList = blogList
+        _viewState.value = update
+    }
+
+    fun setBlogPost(blogPost: BlogPost) {
+        val update = getCurrentViewStateOrNew()
+        update.viewBlogFields.blogPost = blogPost
+        _viewState.value = update
+    }
+
+    fun setIsAuthorOfBlogPost(isAuthorOfBlogPost: Boolean) {
+        val update = getCurrentViewStateOrNew()
+        update.viewBlogFields.isAuthorOfBlogPost = isAuthorOfBlogPost
         _viewState.value = update
     }
 
