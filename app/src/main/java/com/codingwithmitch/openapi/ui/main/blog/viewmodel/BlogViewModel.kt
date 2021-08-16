@@ -32,12 +32,12 @@ class BlogViewModel @Inject constructor(
             )
         )
 
-        setBlogOrder(
-            sharedPreferences.getString(
-                BLOG_ORDER,
-                BlogQueryUtils.BLOG_ORDER_DESC
-            )
-        )
+        sharedPreferences.getString(
+            BLOG_ORDER,
+            BlogQueryUtils.BLOG_ORDER_DESC
+        )?.let {
+            setBlogOrder(it)
+        }
     }
 
     override fun initNewViewState(): BlogViewState {
