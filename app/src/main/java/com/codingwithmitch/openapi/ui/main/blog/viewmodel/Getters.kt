@@ -1,5 +1,6 @@
 package com.codingwithmitch.openapi.ui.main.blog.viewmodel
 
+import android.net.Uri
 import com.codingwithmitch.openapi.models.BlogPost
 
 fun BlogViewModel.getFilter(): String {
@@ -60,4 +61,13 @@ fun BlogViewModel.getBlogPost(): BlogPost {
 
 fun BlogViewModel.getDummyBlogPost(): BlogPost {
     return BlogPost(-1, "", "", "", "", 1, "")
+}
+
+fun BlogViewModel.getUpdatedBlogUri(): Uri? {
+    getCurrentViewStateOrNew().let {
+        it.updateBlogFields.updatedImageUri?.let {
+            return it
+        }
+    }
+    return null
 }

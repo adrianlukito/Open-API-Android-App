@@ -2,9 +2,12 @@ package com.codingwithmitch.openapi.ui.main.blog
 
 import android.os.Bundle
 import android.view.*
+import androidx.navigation.fragment.findNavController
 import com.codingwithmitch.openapi.R
 import com.codingwithmitch.openapi.ui.main.blog.state.BlogStateEvent.UpdatedBlogPostEvent
 import com.codingwithmitch.openapi.ui.main.blog.state.BlogViewState
+import com.codingwithmitch.openapi.ui.main.blog.viewmodel.onBlogPostUpdateSuccess
+import com.codingwithmitch.openapi.ui.main.blog.viewmodel.setUpdateBlogFields
 import kotlinx.android.synthetic.main.fragment_update_blog.*
 import okhttp3.MultipartBody
 
@@ -32,7 +35,9 @@ class UpdateBlogFragment : BaseBlogFragment(){
                 data.data?.getContentIfNotHandled()?.let { viewState ->
                     // if this is not null, the blogpost was updated...
                     viewState.viewBlogFields.blogPost?.let { blogPost ->
-                        // TODO("onBlogpostUpdateSuccess")
+                        viewModel.onBlogPostUpdateSuccess(blogPost).let {
+                            findNavController().popBackStack()
+                        }
                     }
                 }
             }
@@ -77,5 +82,14 @@ class UpdateBlogFragment : BaseBlogFragment(){
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.setUpdateBlogFields(
+            blog_title.text.toString(),
+            blog_body.text.toString(),
+            null
+        )
     }
 }
