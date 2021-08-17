@@ -118,6 +118,12 @@ class BlogListAdapter(
         differ.submitList(list)
     }
 
+    fun preloadGlideImages(requestManager: RequestManager, list: List<BlogPost>) {
+        for (blogPost in list) {
+            requestManager.load(blogPost.image).preload()
+        }
+    }
+
     inner class BlogViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: BlogPost) = with(itemView) {
