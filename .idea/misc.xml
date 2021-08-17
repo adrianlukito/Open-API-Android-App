@@ -8,6 +8,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_check_green_24dp.xml" value="0.1765625" />
         <entry key="app/src/main/res/drawable/main_button_drawable.xml" value="0.1671875" />
         <entry key="app/src/main/res/layout/activity_auth.xml" value="0.15104166666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.13385416666666666" />
@@ -26,7 +27,9 @@
         <entry key="app/src/main/res/layout/layout_blog_list_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_no_more_results.xml" value="0.1796875" />
         <entry key="app/src/main/res/menu/main_bottom_navigation_menu.xml" value="0.18854166666666666" />
+        <entry key="app/src/main/res/menu/publish_menu.xml" value="0.16041666666666668" />
         <entry key="app/src/main/res/menu/search_menu.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/menu/update_menu.xml" value="0.16041666666666668" />
       </map>
     </option>
   </component>

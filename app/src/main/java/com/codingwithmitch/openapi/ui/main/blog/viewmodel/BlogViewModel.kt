@@ -14,6 +14,8 @@ import com.codingwithmitch.openapi.ui.main.blog.state.BlogViewState
 import com.codingwithmitch.openapi.util.AbsentLiveData
 import com.codingwithmitch.openapi.util.PreferenceKeys.Companion.BLOG_FILTER
 import com.codingwithmitch.openapi.util.PreferenceKeys.Companion.BLOG_ORDER
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 class BlogViewModel @Inject constructor(
@@ -70,6 +72,20 @@ class BlogViewModel @Inject constructor(
                     blogRepository.deleteBlogPost(
                         authToken,
                         getBlogPost()
+                    )
+                } ?: AbsentLiveData.create()
+            }
+
+            is UpdatedBlogPostEvent -> {
+                return sessionManager.cachedToken.value?.let { authToken ->
+                    val title = RequestBody.create(MediaType.parse("text/plain"), stateEvent.title)
+                    val body = RequestBody.create(MediaType.parse("text/plain"), stateEvent.body)
+                    blogRepository.updateBlogPost(
+                        authToken,
+                        getSlug(),
+                        title,
+                        body,
+                        null
                     )
                 } ?: AbsentLiveData.create()
             }
