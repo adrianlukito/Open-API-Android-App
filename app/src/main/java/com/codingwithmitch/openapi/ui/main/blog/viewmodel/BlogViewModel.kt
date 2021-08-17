@@ -9,8 +9,7 @@ import com.codingwithmitch.openapi.ui.BaseViewModel
 import com.codingwithmitch.openapi.ui.DataState
 import com.codingwithmitch.openapi.ui.Loading
 import com.codingwithmitch.openapi.ui.main.blog.state.BlogStateEvent
-import com.codingwithmitch.openapi.ui.main.blog.state.BlogStateEvent.BlogSearchEvent
-import com.codingwithmitch.openapi.ui.main.blog.state.BlogStateEvent.None
+import com.codingwithmitch.openapi.ui.main.blog.state.BlogStateEvent.*
 import com.codingwithmitch.openapi.ui.main.blog.state.BlogViewState
 import com.codingwithmitch.openapi.util.AbsentLiveData
 import com.codingwithmitch.openapi.util.PreferenceKeys.Companion.BLOG_FILTER
@@ -57,11 +56,20 @@ class BlogViewModel @Inject constructor(
                 } ?: AbsentLiveData.create()
             }
 
-            is BlogStateEvent.CheckAuthorOfBlogPost -> {
+            is CheckAuthorOfBlogPost -> {
                 return sessionManager.cachedToken.value?.let { authToken ->
                     blogRepository.isAuthorOfBlogPost(
                         authToken,
                         getSlug()
+                    )
+                } ?: AbsentLiveData.create()
+            }
+
+            is DeleteBlogPostEvent -> {
+                return sessionManager.cachedToken.value?.let { authToken ->
+                    blogRepository.deleteBlogPost(
+                        authToken,
+                        getBlogPost()
                     )
                 } ?: AbsentLiveData.create()
             }

@@ -1,6 +1,6 @@
 package com.codingwithmitch.openapi.ui.main.blog.viewmodel
 
-import android.util.Log
+import com.codingwithmitch.openapi.models.BlogPost
 
 fun BlogViewModel.getFilter(): String {
     getCurrentViewStateOrNew().let {
@@ -46,7 +46,18 @@ fun BlogViewModel.getSlug(): String {
 
 fun BlogViewModel.isAuthorOfBlogPost(): Boolean {
     getCurrentViewStateOrNew().let {
-        Log.d(TAG, "TEST TEST: ${it.viewBlogFields.isAuthorOfBlogPost}")
         return it.viewBlogFields.isAuthorOfBlogPost
     }
+}
+
+fun BlogViewModel.getBlogPost(): BlogPost {
+    getCurrentViewStateOrNew().let {
+        return it.viewBlogFields.blogPost?.let {
+            return it
+        } ?: getDummyBlogPost()
+    }
+}
+
+fun BlogViewModel.getDummyBlogPost(): BlogPost {
+    return BlogPost(-1, "", "", "", "", 1, "")
 }
