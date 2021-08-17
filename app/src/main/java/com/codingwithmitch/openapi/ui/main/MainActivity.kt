@@ -96,7 +96,7 @@ class MainActivity: BaseActivity(),
     }
 
     override fun onGraphChange() {
-        expandAppbar()
+        expandAppBar()
         cancelActiveJobs()
     }
 
@@ -129,7 +129,7 @@ class MainActivity: BaseActivity(),
         }
     }
 
-    private fun expandAppbar() {
+    override fun expandAppBar() {
         findViewById<AppBarLayout>(R.id.app_bar).setExpanded(true)
     }
 }

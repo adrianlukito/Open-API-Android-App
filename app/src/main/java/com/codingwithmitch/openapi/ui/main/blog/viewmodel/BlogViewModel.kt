@@ -58,7 +58,12 @@ class BlogViewModel @Inject constructor(
             }
 
             is BlogStateEvent.CheckAuthorOfBlogPost -> {
-                return AbsentLiveData.create()
+                return sessionManager.cachedToken.value?.let { authToken ->
+                    blogRepository.isAuthorOfBlogPost(
+                        authToken,
+                        getSlug()
+                    )
+                } ?: AbsentLiveData.create()
             }
 
             is None -> {
