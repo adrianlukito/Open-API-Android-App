@@ -85,7 +85,7 @@ class BlogViewModel @Inject constructor(
                         getSlug(),
                         title,
                         body,
-                        null
+                        stateEvent.image
                     )
                 } ?: AbsentLiveData.create()
             }

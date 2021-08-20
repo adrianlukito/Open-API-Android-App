@@ -83,15 +83,11 @@ class CreateBlogFragment : BaseCreateBlogFragment(){
             requestManager
                 .load(image)
                 .into(blog_image)
-        }
-        blog_title.setText(title)
-        blog_body.setText(body)
-    }
-
-    private fun setDefaultImage() {
-        requestManager
+        } ?: requestManager
             .load(R.drawable.default_image)
             .into(blog_image)
+        blog_title.setText(title)
+        blog_body.setText(body)
     }
 
     private fun pickFromGallery() {
